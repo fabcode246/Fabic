@@ -13,7 +13,4 @@ else:
     if "-s" in sys.argv:
         queue.shuffled()
     queue.play()
-    def sigint_handler(signal, frame):
-        queue.stop()
-        sys.exit(0)
-    signal.signal(signal.SIGINT, sigint_handler)
+    plyr.loop()
