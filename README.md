@@ -1,7 +1,7 @@
 # Fabic
 a simple command line music player
 
-![image](https://user-images.githubusercontent.com/69343709/147870944-0fa74494-da3f-4165-9e18-121fc79703ce.png)
+![image](https://cdn.discordapp.com/attachments/885873125546426368/927121622136160296/Hnet-image1.gif)
 
 ## Installation:
 ### step 1
