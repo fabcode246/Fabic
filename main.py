@@ -1,9 +1,8 @@
 import os
 import pygame
 import random
-from mutagen.mp3 import MP3
 import time
-import sys
+from queue import Queue
 
 def help():
     pass
@@ -27,29 +26,38 @@ class Player:
     def open_folder(self, path):
         files = []
         for i in os.listdir(path):
-            files.append(path+i)
+            files.append(path+"/"+i)
         self.queue = Queue(files)
 
     def get_queue(self):
         return self.queue
 
-    def loop(self):
-        while True:
-            #self.event_handler()
-            loading = ""
-            for i in range(int((self.queue.get_pos()/self.queue.duration) * 50)):
-                loading += "-"
-            for i in range(int(((self.queue.duration - self.queue.get_pos())/self.queue.duration) * 50)):
-                loading += " "
-            def progress(val):   
-                mins = int(val / 60)
-                secs = int(val - mins * 60)
-                return f"{mins}:{secs}"
-            print(f"Now playing[{self.queue.index+1}]: " + self.queue.song_now + f" ({progress(self.queue.get_pos())}/{progress(self.queue.duration)}) " + loading, end="\r")
-            time.sleep(0.05)
-            for event in pygame.event.get():
-                if event.type == SONG_END:
-                    self.queue.next()
+    def get_loading_str(self):
+        loading = ""
+        for i in range(int((self.queue.get_pos()/self.queue.duration) * 50)):
+            loading += "-"
+        for i in range(int(((self.queue.duration - self.queue.get_pos())/self.queue.duration) * 50)):
+            loading += " "
+        return loading
+
+    def get_progress_str(self):
+        def progress(val):   
+            mins = int(val / 60)
+            secs = int(val - mins * 60)
+            return f"{mins}:{secs}"
+        return f"({progress(self.queue.get_pos())}/{progress(self.queue.duration)})"
+
+    def get_nowplaying_str(self):
+        return f"Now playing[{self.queue.index+1}/{len(self.queue.now)}]"
+
+    def get_name_str(self):
+        return self.queue.song_now
+
+    def event_handler(self):
+        for event in pygame.event.get():
+            if event.type == SONG_END:
+                self.queue.next()
+
 '''
     def event_handler(self):
         

@@ -1,4 +1,5 @@
 import pygame
+from mutagen.mp3 import MP3
 
 SONG_END = pygame.USEREVENT + 1
 
